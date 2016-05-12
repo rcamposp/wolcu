@@ -1,0 +1,47 @@
+</main>
+<main>
+	<div id="events-show">
+		<div class="container-fluid">
+			<div id="event-intro" class="row">
+				<h1 class="event-title"><%= @event.name %></h1>
+				<p class="event-date"><%= @event.date %> <%= @event.time %></p>
+				<div class="cover" style="background-image: url('<%= @event.image %>');"></div>
+			</div>
+		</div>
+		<div id="event-body" class="container">			
+			<div class="row">
+				<div id="description" class="col-sm-12">
+					<%= @event.description %>
+				</div>
+				<div id="tickets" class="col-sm-12">
+					<h3>Get your tickets</h3>
+					<div class="table-responsive">
+					<table class="table">		
+						<thead class="thead-default">
+							<th>Ticket</th>			
+							<th>Price</th>
+							<th>Total</th>
+							<th>Quantity</th>
+						</thead>
+						<tbody>
+							<% @event.tickets.each do |ticket| %>
+								<tr class="ticket">
+								<td class="description">
+									<b><%= ticket.name %></b>
+									<p><%= ticket.description %></p>
+									</td>								
+								<td><%= number_to_currency ticket.price %></td>
+								<td><%= number_to_currency 0.00 %></td>
+								<td>									
+									<button type="button" class="btn btn-primary btn-sm">Add</button>
+								</td>
+								</tr>
+							<% end %>
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</div>
+			
+		</div>		
+	</div>
