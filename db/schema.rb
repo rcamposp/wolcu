@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511202221) do
+ActiveRecord::Schema.define(version: 20160512191854) do
 
   create_table "cities", force: :cascade do |t|
     t.string  "name",    limit: 255
@@ -37,6 +37,41 @@ ActiveRecord::Schema.define(version: 20160511202221) do
     t.time     "time"
     t.string   "image",       limit: 255
   end
+
+  create_table "order_tickets", force: :cascade do |t|
+    t.integer  "order_id",    limit: 4
+    t.string   "ticket_name", limit: 255
+    t.decimal  "price",                   precision: 10
+    t.string   "firstname",   limit: 255
+    t.string   "lastname",    limit: 255
+    t.string   "email",       limit: 255
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "order_tickets", ["order_id"], name: "index_order_tickets_on_order_id", using: :btree
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "user_id",        limit: 4
+    t.string   "firstname",      limit: 255
+    t.string   "lastname",       limit: 255
+    t.string   "email",          limit: 255
+    t.string   "phone",          limit: 255
+    t.string   "rut",            limit: 255
+    t.string   "address",        limit: 255
+    t.string   "country",        limit: 255
+    t.string   "zone",           limit: 255
+    t.string   "city",           limit: 255
+    t.decimal  "subtotal",                   precision: 10
+    t.decimal  "total",                      precision: 10
+    t.integer  "status",         limit: 4
+    t.string   "payment_method", limit: 255
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "event",          limit: 255
+  end
+
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "tickets", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -89,6 +124,8 @@ ActiveRecord::Schema.define(version: 20160511202221) do
   add_index "zones", ["country_id"], name: "index_zones_on_country_id", using: :btree
 
   add_foreign_key "cities", "zones"
+  add_foreign_key "order_tickets", "orders"
+  add_foreign_key "orders", "users"
   add_foreign_key "tickets", "events"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "countries"

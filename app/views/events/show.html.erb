@@ -8,12 +8,13 @@
 				<div class="cover" style="background-image: url('<%= @event.image %>');"></div>
 			</div>
 		</div>
-		<div id="event-body" class="container">			
+		<div id="event-body" class="container" ng-app="eventsApp">			
 			<div class="row">
 				<div id="description" class="col-sm-12">
 					<%= @event.description %>
 				</div>
-				<div id="tickets" class="col-sm-12">
+				<div id="tickets" class="col-sm-12" ng-controller="TicketsController">
+				<%= javascript_tag "initCart(#{@event.tickets.to_json.html_safe});" %>			
 					<h3>Get your tickets</h3>
 					<div class="table-responsive">
 					<table class="table">		
@@ -23,25 +24,30 @@
 							<th>Total</th>
 							<th>Quantity</th>
 						</thead>
-						<tbody>
-							<% @event.tickets.each do |ticket| %>
-								<tr class="ticket">
-								<td class="description">
-									<b><%= ticket.name %></b>
-									<p><%= ticket.description %></p>
-									</td>								
-								<td><%= number_to_currency ticket.price %></td>
-								<td><%= number_to_currency 0.00 %></td>
-								<td>									
-									<button type="button" class="btn btn-primary btn-sm">Add</button>
-								</td>
-								</tr>
-							<% end %>
+						<tbody>							
+							<tr class="ticket" ng-repeat="ticket in cart">
+							<td class="description">
+								<b>{{ticket.name}}</b>
+								<p>{{ticket.description}}</p>
+								</td>								
+							<td>{{ticket.price | currency : "$" : 0}}</td>
+							<td>{{ticket.buy_total_price | currency : "$" : 0}}</td>
+							<td>		
+								<div ng-if="ticket.buy_quantity > 0" class="">
+									<input type="text" disabled="" value="{{ticket.buy_quantity}}">
+									  <button ng-click="addTicket(ticket)" type="button" class="btn btn-primary btn-sm">+</button>
+									<button ng-click="subtractTicket(ticket)" type="button" class="btn btn-danger btn-sm">-</button>
+								</div>															
+								<div ng-if="ticket.buy_quantity == 0">
+									<button ng-click="addTicket(ticket)" type="button" class="btn btn-primary btn-sm">Agregar Ticket</button>
+								</div>
+							</td>
+							</tr>							
 						</tbody>
 					</table>
+					<%= csrf_meta_tags %>					
 					</div>
 				</div>
-			</div>
-			
+			</div>			
 		</div>		
 	</div>

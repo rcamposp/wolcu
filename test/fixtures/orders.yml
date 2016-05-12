@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  firstname: MyString
+  lastname: MyString
+  email: MyString
+  phone: MyString
+  rut: MyString
+  address: MyString
+  country: MyString
+  zone: MyString
+  city: MyString
+  subtotal: 9.99
+  total: 9.99
+  status: 1
+  payment_method: MyString
+
+two:
+  user_id: 
+  firstname: MyString
+  lastname: MyString
+  email: MyString
+  phone: MyString
+  rut: MyString
+  address: MyString
+  country: MyString
+  zone: MyString
+  city: MyString
+  subtotal: 9.99
+  total: 9.99
+  status: 1
+  payment_method: MyString
